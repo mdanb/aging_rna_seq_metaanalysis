@@ -35,7 +35,7 @@ top_ten_long_idxs = longlived_sorted_features[:10]
 top_long_features = [features[i] for i in top_ten_long_idxs]
 bottom_ten_long_idxs = longlived_sorted_features[-10:]
 bottom_long_features = [features[i] for i in bottom_ten_long_idxs]
-
+print(top_long_features)
 shortlived_sorted_features = np.argsort(best_clf[0].selected_model.coef_[2])[::-1]
 top_ten_short_idxs = shortlived_sorted_features[:10]
 top_short_features = [features[i] for i in top_ten_short_idxs]
