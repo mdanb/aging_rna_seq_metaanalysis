@@ -15,12 +15,14 @@ where in place of <NCBI_KEY>, you should type in your NCBI API key. Note that us
 
 You are now inside the container, with all necessary dependencies installed (if you know what a virtual machine is, then you can think of the container as a lightweight version of a virtual machine). You'll also notice that the filesystem is separate from your actual filesystem (run `cd ~` and `ls` and you'll notice that you don't see the files you expected to see in your home directory). To exit the container, run `CTRL + D`. 
 
-Inside the container, in the directory `/root`, you'll notice that there are 5 directories. One of them (`common_datastore`) is just a directory to store some data, while 4 of these correspond to the "high-level" tasks that we need to perform:
+Inside the container, in the directory `/root`, you'll notice that there are 7 directories. One of them (`common_datastore`) is just a directory to store some data, while 5 of these correspond to the "high-level" tasks that we need to perform:
 
-1. Query (the NCBI databases), download, and process the gene expression data. This step needs to be done no matter whether you choose to proceed to option 2 and/or option 3 below.
-2. (Optional) Build machine learning models to predict the longevity class (long, short, normal lived).
-3. (Optional) Perform a traditional differential expression analysis to discover longevity gene/gene modules, bypassing the predictive modeling step. 
+1. Query (the NCBI databases), download, and process the gene expression data.
+2. Exploratory Data Analysis + Data normalization/batch correction
+3. (Optional) SAUCIE batch correction
+4. (Optional) Build machine learning models to predict the longevity class (long, short, normal lived).
+5. (Optional) Perform a traditional differential expression analysis to discover longevity gene/gene modules, bypassing the predictive modeling step. 
 
-The directories `query_download_process_data`, `longevity_prediction`, and `differential_expression_analysis` in this Github repository - which are pretty much equivalent to the directories you see in the container - contain READMEs with instructions for the above mentioned tasks, respectively. 
+The directories `query_download_process_data`, `EDA`, `SAUCIE`, `longevity_prediction`, and `differential_expression_analysis` in this Github repository - which are pretty much equivalent to the directories you see in the container - contain READMEs with instructions for the above mentioned tasks, respectively. The `paper` directory just contains some information used to write the paper.
 
-**Note:** All the output files associated with each step of the workflow are already inside the container in the relevant directories. This way, you do not actually have to run the code (which can be quite time consuming at certain points) to obtain its output, but can instead "pick up" the workflow at any stage you wish. 
+**Note:** All the output files associated with each step of the workflow are already inside the container in the relevant directories. This way, you do not actually have to run the code (which can be quite time consuming at certain points) to obtain its output, but can instead "pick up" the workflow at any stage you wish.
