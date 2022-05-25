@@ -2,7 +2,7 @@
 ### Mohamad Daniel Bairakdar, Matthias Truttmann, Ambuj Tewari
 DOCKER BASICS TO START A CONTAINER, SAVE STUFF ETC... 
 
-This repository houses the codebase for the paper **NEW TITLE**. The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
+This repository houses the codebase for the paper **A Meta-Analysis of RNA-Seq Gene Expression Aging Studies**. The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
 Here, we present the pipeline to replicate the results of the paper. 
 
 Note that the only piece of software that you'll need to have installed on your machine is Docker. If you're not familiar with Docker and how to use it, fear not. You don't need to know how to use Docker to follow the steps outlined here. All you need to know is that Docker helps you replicate our results with minimum effort. In fact, Docker is the reason why you don't need any packages - other than Docker - installed on your machine: it provides "a software environment" identical to ours. For details on installation and setup, please visit the [official Docker installation instructions](https://docs.docker.com/get-docker/). 
@@ -17,9 +17,9 @@ You are now inside the container, with all necessary dependencies installed (if 
 
 Inside the container, in the directory `/root`, you'll notice that there are 5 directories. One of them (`common_datastore`) is just a directory to store some data, while 4 of these correspond to the "high-level" tasks that we need to perform:
 
-1. query (the NCBI databases), download, and process the gene expression data. This step needs to be done no matter whether you choose to proceed to option 2 and/or option 3 below.
+1. Query (the NCBI databases), download, and process the gene expression data. This step needs to be done no matter whether you choose to proceed to option 2 and/or option 3 below.
 2. (Optional) Build machine learning models to predict the longevity class (long, short, normal lived).
-3. (Optional) perform a traditional differential expression analysis to discover longevity gene/gene modules, bypassing the predictive modeling step. 
+3. (Optional) Perform a traditional differential expression analysis to discover longevity gene/gene modules, bypassing the predictive modeling step. 
 
 The directories `query_download_process_data`, `longevity_prediction`, and `differential_expression_analysis` in this Github repository - which are pretty much equivalent to the directories you see in the container - contain READMEs with instructions for the above mentioned tasks, respectively. 
 
