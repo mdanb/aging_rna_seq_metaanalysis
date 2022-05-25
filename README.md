@@ -2,7 +2,7 @@
 ### Mohamad Daniel Bairakdar, Matthias Truttmann, Ambuj Tewari
 DOCKER BASICS TO START A CONTAINER, SAVE STUFF ETC... 
 
-This repository houses the codebase for the paper **NEW TITLE**. The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
+This repository houses the codebase for the paper **A Meta-Analysis of RNA-Seq Gene Expression Aging Studies**. The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
 Here, we present the pipeline to replicate the results of the paper. 
 
 Note that the only piece of software that you'll need to have installed on your machine is Docker. If you're not familiar with Docker and how to use it, fear not. You don't need to know how to use Docker to follow the steps outlined here. All you need to know is that Docker helps you replicate our results with minimum effort. In fact, Docker is the reason why you don't need any packages - other than Docker - installed on your machine: it provides "a software environment" identical to ours. For details on installation and setup, please visit the [official Docker installation instructions](https://docs.docker.com/get-docker/). 
