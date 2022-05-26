@@ -2,7 +2,7 @@ library(sva)
 library(biomaRt) # an alternative for annotation
 library(edgeR)
 library(tidyverse)
-library(ensembldb) #helps deal with ensembl
+library(ensembldb) # helps deal with ensembl
 
 load(file = "../common_datastore/bioprojects.Rdata")
 load(file = "../common_datastore/combined_studies_raw_counts.Rdata")
@@ -85,7 +85,7 @@ if (!file.exists("lengths.Rdata")) {
                    mart = worm.anno)
   
   Tx.worm <- as_tibble(Tx.worm)
-  #we need to rename the two columns we just retrieved from biomart
+  # we need to rename the two columns we just retrieved from biomart
   Tx.worm <- dplyr::rename(Tx.worm, target_id = ensembl_transcript_id, 
                            gene_name = ensembl_gene_id)
   
@@ -160,13 +160,6 @@ if (!file.exists(paste("../common_datastore/",
                 sep=""))
 }
 
-# load(file = "../common_datastore/combat_seq_gene_expression.Rdata")
-# 
-# getmm_only <- getmm_normalize(combined_studies_no_singles)
-# getmm_adjusted <- getmm_normalize(adjusted)
-# write.csv(getmm_only, file = "../common_datastore/getmm_gene_expression_data.csv")
-# write.csv(getmm_adjusted, file = "../common_datastore/getmm_adjusted_gene_expression_data.csv")
-
 # All data age batch correction ----
 age <- read.csv("../common_datastore/age.csv")
 samples <- colnames(combined_gene_expression_no_outliers)
@@ -232,25 +225,6 @@ write.csv(combat_seq_experiment_and_age_corrected_getmm_gene_expression_no_outli
                        "combat_seq_experiment_and_age_corrected_getmm_gene_expression_no_outliers.csv",
                        sep=""))
 
-# # Double experiment correction
-# double_combat_seq_no_outliers_and_singles_gene_expression <- ComBat_seq(
-#   combat_seq_no_outliers_and_singles_gene_expression, 
-#   batch=as.numeric(factor(
-#     bioprojects_no_outliers_and_singles)), 
-#   group=NULL)
-# 
-# save(double_combat_seq_no_outliers_and_singles_gene_expression, 
-#      file=paste("../common_datastore/",
-#                 "double_combat_seq_gene_expression_no_outliers.Rdata", sep=
-#                   ""))
-# 
-# double_combat_seq_experiment_corrected_getmm_gene_expression_no_outliers <- 
-#   getmm_normalize(double_combat_seq_no_outliers_and_singles_gene_expression, lengths)
-# write.csv(double_combat_seq_experiment_corrected_getmm_gene_expression_no_outliers, 
-#           file = paste("../common_datastore/", 
-#                        "double_combat_seq_experiment_corrected_getmm_gene_expression_no_outliers.csv",
-#                        sep=""))
-
 # Day 1 and older experiment batch corrected ----
 combined_studies_day_1_and_older <- 
   combined_gene_expression_no_outliers_and_singles[, age >= 1]
@@ -279,26 +253,6 @@ write.csv(combat_seq_getmm_day_1_and_older_experiment_corrected_no_outliers,
                        "combat_seq_experiment_corrected_day_1_and_older_getmm_gene_expression_no_outliers.csv", 
                        sep=""))
 
-# # L4 and younger experiment batch corrected ----
-# bioprojects_L4_and_younger <- bioprojects_no_outliers[age < 1]
-# if (!file.exists("../common_datastore/gene_expression_L4_and_younger_batch_adjusted.Rdata")) {
-#   L4_and_younger_batch_adjusted <- ComBat_seq(combined_studies_L4_and_younger, batch=as.numeric(factor(bioprojects_L4_and_younger)), group=NULL)
-#   save(L4_and_younger_batch_adjusted, file="../common_datastore/gene_expression_L4_and_younger_batch_adjusted.Rdata")
-# }
-# 
-# L4_and_younger_batch_adjusted <- getmm_normalize(L4_and_younger_batch_adjusted)
-# write.csv(L4_and_younger_batch_adjusted, file = "../common_datastore/gene_expression_L4_and_younger_batch_adjusted.csv")
-
-# # L4 and younger age batch corrected ----
-# if (!file.exists("../common_datastore/combat_seq_L4_and_younger_experiment_corrected_no_outliers.Rdata")) {
-#   combat_seq_L4_and_younger_experiment_corrected_no_outliers <- ComBat_seq(combined_studies_L4_and_younger, batch=as.numeric(factor(age[age < 1])), group=NULL)
-#   save(combat_seq_L4_and_younger_age_corrected_no_outliers, file="../common_datastore/combat_seq_L4_and_younger_age_corrected_no_outliers.Rdata")
-# }
-# 
-# load("../common_datastore/combat_seq_L4_and_younger_age_corrected_no_outliers.Rdata")
-# combat_seq_getmm_L4_and_younger_age_corrected_no_outliers <- getmm_normalize(combat_seq_L4_and_younger_age_corrected_no_outliers, lengths)
-# write.csv(combat_seq_getmm_L4_and_younger_age_corrected_no_outliers, file = "../common_datastore/combat_seq_age_corrected_L4_and_younger_getmm_gene_expression_no_outliers.csv")
-
 # L4 and younger experiment batch corrected ----
 combined_studies_L4_and_younger <- 
   combined_gene_expression_no_outliers_and_singles[, age < 1]
@@ -326,54 +280,6 @@ write.csv(combat_seq_getmm_L4_and_younger_experiment_corrected_no_outliers,
           file = paste("../common_datastore/",
                        "combat_seq_experiment_corrected_L4_and_younger_getmm_gene_expression_no_outliers.csv", 
                        sep=""))
-# # combined_studies_L4_and_younger <-
-# #   combined_gene_expression_no_outliers[, age < 1]
-# relevant_bioprojects <- bioprojects_no_outliers_and_singles %>% inner_join(combined_studies_L4_and_younger)
-# as.numeric(factor(bioprojects_no_outliers_and_singles))
-# if (!file.exists("../common_datastore/combat_seq_L4_and_younger_experiment_corrected_no_outliers.Rdata")) {
-#   combat_seq_L4_and_younger_experiment_corrected_no_outliers <- 
-#     ComBat_seq(combined_studies_L4_and_younger, batch=as.numeric(factor(age[age < 1])), group=NULL)
-#   save(combat_seq_L4_and_younger_age_corrected_no_outliers, file="../common_datastore/combat_seq_L4_and_younger_age_corrected_no_outliers.Rdata")
-# }
-# 
-# load("../common_datastore/combat_seq_L4_and_younger_age_corrected_no_outliers.Rdata")
-# combat_seq_getmm_L4_and_younger_age_corrected_no_outliers <- getmm_normalize(combat_seq_L4_and_younger_age_corrected_no_outliers, lengths)
-# write.csv(combat_seq_getmm_L4_and_younger_age_corrected_no_outliers, file = "../common_datastore/combat_seq_age_corrected_L4_and_younger_getmm_gene_expression_no_outliers.csv")
-
-
-# bioprojects_day_1_and_older <- bioprojects_no_outliers[age >= 1]
-# if (!file.exists("../common_datastore/gene_expression_day_1_and_older_batch_adjusted.Rdata")) {
-#   day_1_and_older_batch_adjusted <- ComBat_seq(combined_studies_day_1_and_older, batch=as.numeric(factor(bioprojects_day_1_and_older)), group=NULL)
-#   save(day_1_and_older_batch_adjusted, file="../common_datastore/gene_expression_day_1_and_older_batch_adjusted.Rdata")
-# }
-# 
-# day_1_and_older_batch_adjusted <- getmm_normalize(day_1_and_older_batch_adjusted)
-# write.csv(day_1_and_older_batch_adjusted, file = "../common_datastore/gene_expression_day_1_and_older_batch_adjusted.csv")
-
-# Day 1 and older age batch corrected ----
-# if (!file.exists("../common_datastore/combat_seq_day_1_and_older_age_corrected_no_outliers.Rdata")) {
-#   combat_seq_day_1_and_older_age_corrected_no_outliers <- 
-#     ComBat_seq(combined_studies_day_1_and_older, batch=as.numeric(
-#       factor(age[age >= 1])), group=NULL)
-#   save(combat_seq_day_1_and_older_age_corrected_no_outliers, 
-#        file=paste("../common_datastore/",
-#        "combat_seq_day_1_and_older_age_corrected_no_outliers.Rdata", sep=""))
-# }
-# 
-# combat_seq_getmm_day_1_and_older_age_corrected_no_outliers <- 
-#   getmm_normalize(combat_seq_day_1_and_older_age_corrected_no_outliers, lengths)
-# write.csv(combat_seq_getmm_day_1_and_older_age_corrected_no_outliers, 
-#           file = paste("../common_datastore/",
-# "combat_seq_age_corrected_day_1_and_older_getmm_gene_expression_no_outliers.csv", 
-# sep=""))
-
-# if (!file.exists("../common_datastore/gene_expression_L4_and_younger_age_adjusted.Rdata")) {
-#   L4_and_younger_age_adjusted <- ComBat_seq(combined_studies_L4_and_younger, batch=as.numeric(factor(age[age < 1])), group=NULL)
-#   save(L4_and_younger_age_adjusted, file="../common_datastore/gene_expression_L4_and_younger_age_adjusted.Rdata")
-# }
-# 
-# L4_and_younger_age_adjusted <- getmm_normalize(L4_and_younger_age_adjusted)
-# write.csv(L4_and_younger_age_adjusted, file = "../common_datastore/gene_expression_L4_and_younger_age_adjusted.csv")
 
 # For GO gene filtering
 write.csv(combined_gene_expression_no_outliers_and_singles, file = "../common_datastore/raw_gene_expression_no_outliers_and_singles_for_GO_filtering.csv")
@@ -405,38 +311,19 @@ write_to_files <- function(df) {
   write.table(df[, 3:dim(df)[2]], paste0('../SAUCIE/getmm_corrected/gene_expression_', 
                                          unique(df$Bioproject), ".csv"), 
               row.names = FALSE, col.names = FALSE, sep = ',')
-  # write.csv(df,paste0("../SAUCIE/raw_data/", "gene_expression_", unique(df$Bioproject),".csv"))
 }
 
 Sample <- row.names(getmm_only)
-# write.csv(combat_seq_getmm_GO_filtered, file = "../SAUCIE/getmm_gene_expression_data_no_outliers.csv")
 
 getmm_corrected <- as_tibble(getmm_only) %>%
                     add_column(Sample, .before="WBGene00000001")
 
 getmm_corrected <- as_tibble(sra_to_bioproject) %>%
                     right_join(getmm_corrected)
-
-# raw_combined_studies_no_outliers <- as_tibble(t(dplyr::select(
-#                                               as.data.frame(combined_studies), 
-#                                               -(SRR10222650:SRR10222661))))
-
-# raw_combined_studies_no_outliers <- raw_combined_studies_no_outliers %>% 
-#                                     add_column(Sample, .before="WBGene00000001")
-
-# raw_combined_studies_no_outliers <- as_tibble(sra_to_bioproject) %>%
-#                                     right_join(raw_combined_studies_no_outliers)
                                     
 getmm_corrected <- getmm_corrected %>%
                     group_by(Bioproject) %>%
                     do(write_to_files(.))
-
-# # Post SAUCIE
-# saucie_raw_data <- read.csv("../SAUCIE/intermediate_df.csv")
-# rownames <- saucie_raw_data[, 1]
-# rownames(saucie_raw_data) <- rownames
-# saucie_raw_data <- saucie_raw_data[, 2:dim(saucie_raw_data)[2]]
-# saucie_getmm <- getmm_normalize(t(saucie_raw_data), lengths)
 
 # Count filtered
 cpm <- cpm(combined_gene_expression_no_outliers_and_singles)
@@ -452,19 +339,3 @@ getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles <-
 if (!file.exists("../common_datastore/getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles.csv")) {
   write.csv(getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles, file="../common_datastore/getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles.csv")
 }
-
-# View(combined_gene_expression_no_outliers_and_singles)
-
-
-
-# raw_combined_studies_no_outliers <- as_tibble(t(dplyr::select(as.data.frame(combined_studies), 
-#                                                               -(SRR10222650:SRR10222661)))) %>%
-#                                             add_column(Sample) %>%
-#                                             left_join(as_tibble(sra_to_bioproject)) %>%
-#                                             group_by('Bioproject')
-
-#write.csv(raw_combined_studies_no_outliers, file = "../SAUCIE/raw_gene_expression_data_no_outliers.csv")
-
-#combined_studies_no_outliers['bioproject'] = bioprojects_no_outliers
-# dir.create('../batchEffectRemoval2020/samples')
-# combined_studies_no_outliers['bioproject'] = bioprojects_no_outliers
