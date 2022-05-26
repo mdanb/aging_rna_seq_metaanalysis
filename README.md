@@ -1,6 +1,5 @@
 # A Meta-Analysis of RNA-Seq Gene Expression Aging Studies
 ### Mohamad Daniel Bairakdar, Matthias Truttmann, Ambuj Tewari
-DOCKER BASICS TO START A CONTAINER, SAVE STUFF ETC... 
 
 This repository houses the codebase for the paper **A Meta-Analysis of RNA-Seq Gene Expression Aging Studies**. The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
 Here, we present the pipeline to replicate the results of the paper. 
