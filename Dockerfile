@@ -90,9 +90,10 @@ RUN R -e "BiocManager::install('fgsea')"
 RUN R -e "install.packages('data.table')"                                         
 
 WORKDIR /root
-COPY differential_expression_analysis/ ./                                            
-COPY EDA/ ./                                        
-COPY longevity_prediction/ ./
-COPY SAUCIE/ ./                                        
+COPY differential_expression_analysis differential_expression_analysis/                                            
+COPY EDA EDA/                                        
+COPY longevity_prediction longevity_prediction/
+COPY SAUCIE SAUCIE/                                        
 
 RUN pip3 install tensorflow==2.9.0
+RUN apt-get install -y parallel
