@@ -28,17 +28,7 @@ Finally, the last thing you need to know about the scripts is what they output. 
 
 PS: SRR10087139, SRR10087140, SRR10087141 are weird. Although they're supposed to be paired-end, when you download their SRA files, you only get 1 file. So I processed them manually as if they were single end. 
 
-To combine the data into a single data structure, run `combine_data.R`
-
-**3. Normalization**
-
-Once we have raw read counts, the last step is to perform inter and intra sample normalization, which we do using [GeTMM](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2246-7). To do this, run `./getmm_normalize.R`. This will create the directory `ready_for_analysis`, and the files `sra_to_bioprojects.csv` and `getmm_gene_expression_data.csv` in that directory. These are the important files created by this script, but it will also create intermediate files `lengths.Rdata`, `bioprojects.Rdata`, and `combined_studies_raw_counts.Rdata` in `query_download_process_data`, and `adjusted_gene_expression.Rdata` in `ready_for_analysis`. 
-
-
-Note that we exclude two studies - `PRJNA282784` and `PRJNA261420` - which had only one sample, since Combat-Seq cannot deal with less than 2 samples per study. We also exclude `PRJNA575569`, which had poor quality reads. In total, we end up with 1227 samples with 22113 genes per sample. 
-
-to correct our data for batch effects, so that samples are comparable across experiments - we do this using [Combat-Seq](https://academic.oup.com/nargab/article/2/3/lqaa078/5909519)
-
+To combine the data into a single data structure, run `combine_data.R`. This creates the file `combined_studies_raw_counts.Rdata` in the directory `../common_datastore`.
 
 
 
