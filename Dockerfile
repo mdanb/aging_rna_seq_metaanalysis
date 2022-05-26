@@ -83,5 +83,16 @@ RUN R -e "BiocManager::install('edgeR')"
 RUN R -e "BiocManager::install('ensembldb')"
 RUN R -e "BiocManager::install('tximport')"                                          
 RUN R -e "install.packages('tidyverse')"
+RUN R -e "BiocManager::install('limma')"
+RUN R -e "BiocManager::install('msigdbr')"                                        
+RUN R -e "BiocManager::install('gage')" 
+RUN R -e "BiocManager::install('fgsea')"
+RUN R -e "install.packages('data.table')"                                         
 
-WORKDIR /root 
+WORKDIR /root
+COPY differential_expression_analysis ./                                            
+COPY EDA ./                                        
+COPY longevity_prediction ./
+COPY SAUCIE ./                                        
+
+RUN pip3 install tensorflow==2.9.0
