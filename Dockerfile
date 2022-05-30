@@ -31,7 +31,7 @@ RUN printf $'/LIBS/GUID = "64bcc153-f74b-4505-937d-673f388d0e76"\n\
 RUN mkdir query_download_process_data
 WORKDIR /root/query_download_process_data
 
-RUN echo "export PATH=$PATH:$PWD/sratoolkit.2.11.0-ubuntu64/bin" >> ../.bashrc && source ../.bashrc
+RUN echo "export PATH=$PATH:$PWD/sratoolkit.3.0.0-ubuntu64/bin" >> ../.bashrc && source ../.bashrc
 
 RUN git clone https://github.com/pachterlab/kallisto.git
 RUN cd kallisto && git reset --hard ae81a86 && cd ext/htslib && autoheader && autoconf && cd ../.. \
@@ -40,7 +40,7 @@ RUN cd kallisto && git reset --hard ae81a86 && cd ext/htslib && autoheader && au
 #this is a specific version of the toolkit
 COPY query_download_process_data/ ./ 
 RUN tar -xvzf sratoolkit.3.0.0-ubuntu64.tar.gz
-RUN export PATH=${PATH}:/home/mdanb/sratoolkit.3.0.0-ubuntu64/bin
+RUN export PATH=${PATH}:/root/query_download_process_data/sratoolkit.3.0.0-ubuntu64/bin
 ENV NCBI_API_KEY=''
 
 RUN apt-get update && apt-get install -y \
@@ -97,3 +97,4 @@ COPY SAUCIE SAUCIE/
 
 RUN pip3 install tensorflow==2.9.0
 RUN apt-get install -y parallel
+
