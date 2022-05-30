@@ -1,8 +1,4 @@
-common_datastore/
-
 query_download_process_data/Caenorhabditis_elegans.WBcel235.cdna.all.index
-
-longevity_prediction/data/datastore/
 
 .git
 

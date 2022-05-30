@@ -94,7 +94,7 @@ COPY differential_expression_analysis differential_expression_analysis/
 COPY EDA EDA/                                        
 COPY longevity_prediction longevity_prediction/
 COPY SAUCIE SAUCIE/                                        
+COPY common_datastore common_datastore/ 
 
-RUN pip3 install tensorflow==2.9.0
+RUN pip3 install tensorflow==2.9.0 matplotlib==3.5.1
 RUN apt-get install -y parallel
-
