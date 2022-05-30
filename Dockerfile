@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:1.8.0-cuda11.1-cudnn8-runtime
+FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime
 
 WORKDIR /root
 
@@ -65,10 +65,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt install -y -q --no-install-recommends r-base
 #=4.1.0-1.2004.0
 
-#RUN pip3 install torch-scatter -f https://pytorch-geometric.com/whl/torch-1.8.0+cu111.html
-#RUN pip3 install torch-sparse -f https://pytorch-geometric.com/whl/torch-1.8.0+cu111.html
-#RUN pip3 install torch-geometric==2.0.1
-
 RUN pip3 install pandas==1.2.4 tqdm==4.62 scikit-learn==0.24.1 
 RUN pip3 install xgboost==1.4.1 
 RUN pip3 install pipelinehelper==0.7.8 joblib==1.0.1
@@ -98,3 +94,9 @@ COPY common_datastore common_datastore/
 
 RUN pip3 install tensorflow==2.9.0 matplotlib==3.5.1
 RUN apt-get install -y parallel
+
+RUN pip3 install torch-scatter torch-sparse torch-cluster torch-spline-conv \ 
+torch-geometric -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
+#RUN pip3 install torch-scatter -f https://pytorch-geometric.com/whl/torch-1.8.0+cu111.html
+#RUN pip3 install torch-sparse -f https://pytorch-geometric.com/whl/torch-1.8.0+cu111.html
+#RUN pip3 install torch-geometric==2.0.1
