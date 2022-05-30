@@ -12,8 +12,7 @@ mkdir -p ready_for_analysis download_dir
 
 if [ ! -f ./Caenorhabditis_elegans.WBcel235.cdna.all.index ]; then
 	echo "Creating index file..."
-	kallisto index -i Caenorhabditis_elegans.WBcel235.cdna.all.index \
-	Caenorhabditis_elegans.WBcel235.cdna.all.fa
+	kallisto index -i Caenorhabditis_elegans.WBcel235.cdna.all.index Caenorhabditis_elegans.WBcel235.cdna.all.fa
 	echo "Done creating index file"
 fi
 
@@ -31,12 +30,10 @@ fi
 ./second_queue.sh &
 
 while true; do
-	percent_occupied=$(df -H | grep -E $DISK_SPACE | awk '{ print $5 }' \
-	| sed 's/.$//')
+	percent_occupied=$(df -H | grep -E $DISK_SPACE | awk '{ print $5 }' | sed 's/.$//')
 	cat accession_list.txt | xargs -P$MAX_FILES -n3 ./first_queue.sh &
 	while [[ $percent_occupied -lt $MAX_OCCUPIED_PERCENT ]]; do
-		percent_occupied=$(df -H | grep -E $DISK_SPACE | awk \
-		'{ print $5 }' | sed 's/.$//') 
+		percent_occupied=$(df -H | grep -E $DISK_SPACE | awk '{ print $5 }' | sed 's/.$//') 
 		sleep 5
 	done
 
@@ -50,8 +47,7 @@ while true; do
 	./run_second_queue_cleanup.sh &
 	while [[ $percent_occupied -gt $LOWER_THRESHOLD ]]; do
 		echo "$percent_occupied% currently occupied"
-		percent_occupied=$(df -H | grep -E $DISK_SPACE | awk \
-		'{ print $5 }' | sed 's/.$//')
+		percent_occupied=$(df -H | grep -E $DISK_SPACE | awk '{ print $5 }' | sed 's/.$//')
 		sleep 5
 	done
 done
