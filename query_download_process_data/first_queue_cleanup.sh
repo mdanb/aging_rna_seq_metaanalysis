@@ -24,16 +24,13 @@ for file in $(find download_dir -name *fastq*); do
 	if [[ $file =~ PAIRED ]]; then
 		if [[ $file =~ _2 ]] || [[ $file =~ _1 ]]; then
 			{ set -e; pigz --fast $file ; mkdir -p 
-			ready_for_analysis/$bioproject/$srr ; mv $file.gz \
-			ready_for_analysis/$bioproject/$srr ; }&
+			ready_for_analysis/$bioproject/$srr ; mv $file.gz ready_for_analysis/$bioproject/$srr ; }&
 		else
 			echo "$file" >> trouble_files
 			rm $file
 			sed -i "/$(echo $file | rev | cut -d / -f1 | rev)/d" accession_list
 		fi
 	else
-		{ set -e; pigz --fast $file ; mkdir -p \
-		ready_for_analysis/$bioproject/$srr ; mv $file.gz \
-		ready_for_analysis/$bioproject/$srr ; }&
+		{ set -e; pigz --fast $file ; mkdir -p ready_for_analysis/$bioproject/$srr ; mv $file.gz ready_for_analysis/$bioproject/$srr ; }&
 	fi
 done
