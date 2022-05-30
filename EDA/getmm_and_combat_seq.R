@@ -282,7 +282,8 @@ write.csv(combat_seq_getmm_L4_and_younger_experiment_corrected_no_outliers,
                        sep=""))
 
 # For GO gene filtering
-write.csv(combined_gene_expression_no_outliers_and_singles, file = "../common_datastore/raw_gene_expression_no_outliers_and_singles_for_GO_filtering.csv")
+write.csv(combined_gene_expression_no_outliers_and_singles, 
+          file = "../common_datastore/raw_gene_expression_no_outliers_and_singles_for_GO_filtering.csv")
 
 # After GO filtering in Python
 GO_filtered_raw_gene_expression_data <- read.csv("../common_datastore/GO_filtered_raw_gene_expression_data.csv")
@@ -320,7 +321,8 @@ getmm_corrected <- as_tibble(getmm_only) %>%
 
 getmm_corrected <- as_tibble(sra_to_bioproject) %>%
                     right_join(getmm_corrected)
-                                    
+
+# Can ignore warning/error message                                    
 getmm_corrected <- getmm_corrected %>%
                     group_by(Bioproject) %>%
                     do(write_to_files(.))
@@ -328,14 +330,15 @@ getmm_corrected <- getmm_corrected %>%
 # Count filtered
 cpm <- cpm(combined_gene_expression_no_outliers_and_singles)
 keepers <- rowSums(cpm>1)>=236
-count_filtered_gene_expression_no_outliers_and_singles <- 
+count_filtered_gene_expression_no_outliers_and_singles <-
                      combined_gene_expression_no_outliers_and_singles[keepers, ]
-combat_seq_count_filtered_gene_expression_no_outliers_and_singles <- 
-  ComBat_seq(count_filtered_gene_expression_no_outliers_and_singles, 
-             batch=as.numeric(factor(bioprojects_no_outliers_and_singles)), 
+combat_seq_count_filtered_gene_expression_no_outliers_and_singles <-
+  ComBat_seq(count_filtered_gene_expression_no_outliers_and_singles,
+             batch=as.numeric(factor(bioprojects_no_outliers_and_singles)),
              group=NULL)
-getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles <- 
+getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles <-
   getmm_normalize(combat_seq_count_filtered_gene_expression_no_outliers_and_singles, lengths)
 if (!file.exists("../common_datastore/getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles.csv")) {
-  write.csv(getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles, file="../common_datastore/getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles.csv")
+  write.csv(getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles, 
+            file="../common_datastore/getmm_combat_seq_count_filtered_gene_expression_no_outliers_and_singles.csv")
 }
