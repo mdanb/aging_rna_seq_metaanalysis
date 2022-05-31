@@ -17,13 +17,13 @@ parser.add_argument('--age_path', type=str, default="../common_datastore/age.csv
 parser.add_argument('--experiments_path', type=str, default="../common_datastore/sra_to_bioproject.csv",
                     help='path to sra to bioproject mapping (default: ../common_datastore/sra_to_bioproject.csv)')
 # MLP parameters
-parser.add_argument('--mlp_hidden_dim', type=int, default=512,
-                    help='embedding dimensions (default: 512)')
+parser.add_argument('--mlp_hidden_dim', type=int, default=1024,
+                    help='embedding dimensions (default: 1024)')
 parser.add_argument('--num_mlp_layers', type=int, default=3,
                     help='number of MLP layers total, excluding input layer (default: 3)')
 # Training / Testing settings
-parser.add_argument('--dropout', type=float, default=0,
-                    help='dropout (default: 0)')
+parser.add_argument('--dropout', type=float, default=0.8,
+                    help='dropout (default: 0.8)')
 parser.add_argument('--weight_decay', type=float, default=0.001,
                     help='weight decay (default: 0.001)')
 parser.add_argument('--batch_size', type=int, default=1500,

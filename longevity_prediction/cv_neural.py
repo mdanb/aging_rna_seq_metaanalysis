@@ -90,6 +90,7 @@ if config.train_MLP:
                           f"-mlp_hidden_dim_{mlp_hidden_dim}-mixsplit_{mixsplit}-seed_{seed}-data_{data}"
     if not (os.path.exists(f"./results/neural/{mlp_experiment_name}/best_model_stats.txt")):
         print('Running cross validate with pure MLP')
+        print(f"Creating folder {mlp_experiment_name}")
         dataset = load_data(config)
         train_test_dataset_list = load_train_test_datasets(dataset)
         X_train, labels_train, experiments_train = train_test_dataset_list[0]
