@@ -1,3 +1,10 @@
+.idea
+.ipynb_checkpoints/
+.Rhistory
+.~lock.distance_mat.csv#
+
+__pycache__
+
 SAUCIE/scripts/outputs
 
 .git
