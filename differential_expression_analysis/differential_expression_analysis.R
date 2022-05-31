@@ -1,9 +1,8 @@
 # Load packages -----
-library(tidyverse) 
-library(limma) 
-library(edgeR) 
+library(tidyverse)
+library(limma)
+library(edgeR)
 library(msigdbr)
-library(dplyr)
 library(gage)
 library(fgsea)
 library(data.table)
@@ -126,7 +125,6 @@ GSEA = function(gene_list, pathway_to_genes, pval) {
     dplyr::filter(!is.na(p.geomean) & q.val < pval ) %>%
     dplyr::select("Pathway")
   
-  #print(dim(rbind(ups,downs)))
   keepups = data.table(fgRes[fgRes$NES > 0 & !is.na(match(fgRes$pathway, ups$Pathway)), ])
   keepdowns = data.table(fgRes[fgRes$NES < 0 & !is.na(match(fgRes$pathway, downs$Pathway)), ])
   
@@ -166,9 +164,9 @@ mart <- useEnsembl(biomart = "ensembl",
 Tx.worm <- getBM(attributes=c('ensembl_transcript_id',
                               'ensembl_gene_id'),
                  mart = mart)
-# Tx.worm_old <- as_tibble(Tx.worm_old)
+
 Tx.worm <- as_tibble(Tx.worm)
-#we need to rename the two columns we just retrieved from biomart
+# we need to rename the two columns we just retrieved from biomart
 Tx.worm <- dplyr::rename(Tx.worm, target_id = ensembl_transcript_id, 
                          gene_name = ensembl_gene_id)
 
@@ -185,8 +183,6 @@ for (dir in list.files("../query_download_process_data/ready_for_analysis/")) {
     genes <- rownames(Txi_gene[["counts"]])
     samples = lapply(strsplit(path, "/"), '[', 5)
     colnames(Txi_gene[["counts"]]) <- samples
-    #bioprojects <- c(bioprojects, rep(dir, ncol(Txi_gene[["counts"]])))
-    #all_samples <- c(all_samples, samples)
     dir.create(paste("../common_datastore/single_experiments/", dir, sep=''))
     file = paste(dir, '.csv', sep='')
     study_design_file <- labels_with_age[labels_with_age$Sample %in% samples, ]
@@ -283,7 +279,6 @@ for (dir in list.files("../common_datastore/single_experiments/")) {
   }
 }
 
-# sra_to_bioproject <- read.csv('../common_datastore/sra_to_bioproject.csv')
 differentially_expressed_genes <- tibble()
 colnames(differentially_expressed_genes) <- c('Bioproject', 'Gene', 'Comparison')
 
@@ -298,12 +293,6 @@ for (dir in list.files("../common_datastore/single_experiments/")) {
           dplyr::select(Gene) %>%
           add_column(Bioproject=dir) %>%
           add_column(Comparison='long vs normal')
-        
-        # diff_genes <- diff_genes %>%
-        #   pivot_longer(!Gene, names_to = 'Sample', values_to='getmm') %>%
-        #   dplyr::select(-getmm) %>%
-        #   left_join(sra_to_bioproject) %>%
-        #   add_column(Comparison='long vs normal')
       }
     }
     else if (file == 'diffGenes_long_v_short.csv') {
@@ -315,11 +304,6 @@ for (dir in list.files("../common_datastore/single_experiments/")) {
           dplyr::select(Gene) %>%
           add_column(Bioproject=dir) %>%
           add_column(Comparison='long vs short')
-        # diff_genes <- diff_genes %>%
-        #   pivot_longer(!Gene, names_to = 'Sample', values_to='getmm') %>%
-        #   dplyr::select(-getmm) %>%
-        #   left_join(sra_to_bioproject) %>%
-        #   add_column(Comparison='long vs short')
       }
     }
     else if (file == 'diffGenes_short_v_normal.csv') {
@@ -331,11 +315,6 @@ for (dir in list.files("../common_datastore/single_experiments/")) {
           dplyr::select(Gene) %>%
           add_column(Bioproject=dir) %>%
           add_column(Comparison='short vs normal')
-        # diff_genes <- diff_genes %>%
-        #   pivot_longer(!Gene, names_to = 'Sample', values_to='getmm') %>%
-        #   dplyr::select(-getmm) %>%
-        #   left_join(sra_to_bioproject) %>%/
-        #   add_column(Comparison='short vs normal')
       }
     }
     if (dim(diff_genes)[1] != 0) {
