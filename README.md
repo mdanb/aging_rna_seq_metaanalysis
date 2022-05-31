@@ -8,7 +8,7 @@ Here, we present the pipeline to replicate the results of the paper.
 
 Note that the only piece of software that you'll need to have installed on your machine is Docker. If you're not familiar with Docker and how to use it, fear not. You don't need to know how to use Docker to follow the steps outlined here. All you need to know is that Docker helps you replicate our results with minimum effort. In fact, Docker is the reason why you don't need any packages - other than Docker - installed on your machine: it provides "a software environment" identical to ours. For details on installation and setup, please visit the [official Docker installation instructions](https://docs.docker.com/get-docker/). 
 
-Once you have Docker installed, run INSERT INSTRUCTIONS TO PULL DOCKER IMAGE HERE. Next, start up the software environment (the "container" in Docker speak):
+Once you have Docker installed, run `docker pull mdanb/aging_rna_seq_metaanalysis` to pull the Docker image associated with this project. Next, start up the software environment (the "container" in Docker speak):
 ```
 docker run -it -e NCBI_API_KEY=<NCBI_KEY> rna_seq_longevity_prediction
 ```
