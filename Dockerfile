@@ -97,6 +97,4 @@ RUN apt-get install -y parallel
 
 RUN pip3 install torch-scatter torch-sparse torch-cluster torch-spline-conv \ 
 torch-geometric -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
-#RUN pip3 install torch-scatter -f https://pytorch-geometric.com/whl/torch-1.8.0+cu111.html
-#RUN pip3 install torch-sparse -f https://pytorch-geometric.com/whl/torch-1.8.0+cu111.html
-#RUN pip3 install torch-geometric==2.0.1
+RUN pip3 install biopython goatools wget
