@@ -85,16 +85,16 @@ RUN R -e "BiocManager::install('gage')"
 RUN R -e "BiocManager::install('fgsea')"
 RUN R -e "install.packages('data.table')"                                         
 
+RUN pip3 install tensorflow==2.9.0 matplotlib==3.5.1                            
+RUN apt-get install -y parallel                                                 
+                                                                                
+RUN pip3 install torch-scatter torch-sparse torch-cluster torch-spline-conv \   
+torch-geometric -f https://data.pyg.org/whl/torch-1.11.0+cu113.html             
+RUN pip3 install biopython goatools wget                                        
+
 WORKDIR /root
 COPY differential_expression_analysis differential_expression_analysis/                                            
 COPY EDA EDA/                                        
 COPY longevity_prediction longevity_prediction/
 COPY SAUCIE SAUCIE/                                        
 COPY common_datastore common_datastore/ 
-
-RUN pip3 install tensorflow==2.9.0 matplotlib==3.5.1
-RUN apt-get install -y parallel
-
-RUN pip3 install torch-scatter torch-sparse torch-cluster torch-spline-conv \ 
-torch-geometric -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
-RUN pip3 install biopython goatools wget
