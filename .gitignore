@@ -4,6 +4,7 @@ __pycache__
 .ipynb_checkpoints/
 .Rhistory
 .~lock.distance_mat.csv#
+.RData
 
 common_datastore/
 
