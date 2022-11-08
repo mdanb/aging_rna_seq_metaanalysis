@@ -12,6 +12,7 @@ import numpy as np
 from joblib import dump
 import argparse
 from utils import load_data, load_train_test_datasets
+from sklearn.decomposition import PCA
 
 parser = argparse.ArgumentParser()
 
@@ -42,6 +43,7 @@ parser.add_argument('--seed', type=int, default=42, help="Seed")
 parser.add_argument('--mixsplit', action='store_true', help="perform a mixsplit as described "
                                                             "in paper")
 parser.add_argument('--train_XGB', action='store_true')
+parser.add_argument('--pca', action='store_true')
 
 os.makedirs('results', exist_ok=True)
 
@@ -143,11 +145,30 @@ else:
             'lr__C': [0.1, 1.0, 10, 1000],
         })
     }
+
+if (config.pca):
+    pipe = Pipeline([
+    ('dim_reducer', PCA(n_components=0.9)),
+    ('classifier', PipelineHelper([
+        ('rf', RandomForestClassifier()),
+        ('svm', SVC(kernel='linear')),
+        ('lr', LogisticRegression()),
+    ])),
+    ])
+    params = {
+        'classifier__selected_model': pipe.named_steps['classifier'].generate({
+            'rf__max_depth':[3, 6, 9],
+            'svm__C': [0.1, 1.0, 10, 1000],
+            'lr__C': [0.1, 1.0, 10, 1000],
+        })
+    }
+
+
 os.makedirs('results/non_neural', exist_ok=True)
 data_filename = config.expression_path.split('/')[-1]
 if (config.mixsplit):
     stats_savefile = f"results/non_neural/non_neural_statistics_aging_genes_only_{config.aging_genes_only}_" \
-                     f"{data_filename}"
+                     f"{data_filename}_pca_{config.pca}"
     if (not os.path.exists(stats_savefile)):
         dataset = load_data(config)
         train_test_dataset_list = load_train_test_datasets(dataset)
@@ -160,7 +181,7 @@ if (config.mixsplit):
         compute_per_fold_stats(stats_savefile)
 else:
     stats_savefile = f"results/non_neural/non_neural_statistics_group_stratified_aging_genes_only_" \
-                     f"{config.aging_genes_only}_{data_filename}"
+                     f"{config.aging_genes_only}_{data_filename}_pca_{config.pca}"
     if (not os.path.exists(stats_savefile)):
         dataset = load_data(config)
         train_test_dataset_list = load_train_test_datasets(dataset)
