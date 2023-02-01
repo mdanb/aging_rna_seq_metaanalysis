@@ -1,7 +1,7 @@
 # A Meta-Analysis of RNA-Seq Studies to Identify Novel Genes that Regulate Aging
 ### Mohamad Daniel Bairakdar, Ambuj Tewari, Matthias Truttmann
 
-This repository houses the codebase for the paper **A Meta-Analysis of RNA-Seq Studies to Identify Novel Genes that Regulate Aging**. The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
+This repository houses the codebase for the paper [**A Meta-Analysis of RNA-Seq Studies to Identify Novel Genes that Regulate Aging**](https://www.sciencedirect.com/science/article/pii/S0531556523000281). The aim of the study is to attempt to discover longevity genes/gene modules of C. elegans purely from their RNA-seq gene expression profiles obtained from many different aging studies. 
 
 Here, we present the pipeline to replicate the results of the paper. 
 
